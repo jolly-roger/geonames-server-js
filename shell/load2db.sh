@@ -32,6 +32,7 @@ usage() {
   echo " [create-structure] Creates the table structure with no data in the database $dbName."
   echo " [drop-structure] Removes all the table structure with data from the database $dbName."
   echo " [load-data] Imports geonames data into database $dbName."
+  echo " [truncate-data] Remove geonames data from database $dbName."
   echo
   echo " The rest of parameters indicates the following information:"
   echo " -u <user> User name to access database server."
@@ -89,7 +90,7 @@ show_database() {
 create_database() {
   echo
   echo "Create database [$dbName]."
-  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE $dbName DEFAULT CHARACTER SET utf8;"
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE $dbName CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 }
 
 drop_database() {
@@ -120,6 +121,12 @@ load_data() {
   echo
   echo "Load geonames data into database $dbName."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword --local-infile=1 $dbName < $sqlDir/load_data.sql
+}
+
+truncate_data() {
+  echo
+  echo "Truncate data from database $dbName."
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/truncate_data.sql
 }
 
 header
@@ -170,6 +177,10 @@ case "$action" in
   load-data)
     use_database
     load_data
+    ;;
+  truncate-data)
+    use_database
+    truncate_data
     ;;
   *)
     usage

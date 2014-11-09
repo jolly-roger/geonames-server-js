@@ -1,0 +1,11 @@
+TRUNCATE TABLE `geoname`;
+TRUNCATE TABLE `alternate_name`;
+TRUNCATE TABLE `hierarchy`;
+TRUNCATE TABLE `country`;
+TRUNCATE TABLE `iso_language`;
+TRUNCATE TABLE `admin_code_ascii`;
+TRUNCATE TABLE `admin_code`;
+TRUNCATE TABLE `feature`;
+TRUNCATE TABLE `time_zone`;
+TRUNCATE TABLE `continent`;
+TRUNCATE TABLE `postal_code`;
