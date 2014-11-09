@@ -1,4 +1,11 @@
 #Import data from source geonames.org
+
+Process `import data` consist of two stages:  
+- **downloading** data from external geonames.org  
+- **loading** data into the internal MySQL database  
+
+###DOWNLOADING data
+
 External data urls:
 * [all dumps](http://download.geonames.org/export/dump)
 * [postal codes](http://download.geonames.org/export/zip)
@@ -9,12 +16,26 @@ $ bash ./shell/download.sh --whole
 ```
 
 For running shell script with other options see descriptions.
-Just run without options - and yuo see descriptions about all available options
+Just run without options - and see descriptions about all available options
 ```bash
 $ bash ./shell/download.sh
 ```
 
-###Additionaly
+###LOADING data
+
+For loading external data - call the next shell script with option `-a import-data`
+and database options `-u username -p password`
+```bash
+$ bash ./shell/load2db.sh -a import-data -u username -p password
+```
+
+For running shell script with other options see descriptions.
+Just run without options - and see descriptions about all available options
+```bash
+$ bash ./shell/load2db.sh
+```
+
+##Additionaly
 Total disk space used for downloaded data:
 ```bash
 $ du

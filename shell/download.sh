@@ -10,8 +10,6 @@ dir=$( cd "$( dirname "$0" )" && pwd )
 zipDir="$dir/../data/zip"
 txtDir="$dir/../data/txt"
 
-echo $zipDir
-
 header() {
 	echo
 	echo "========================================="
@@ -113,7 +111,7 @@ header
 
 if [ $# -lt 1 ]; then
 	usage
-	exit 1
+	exit -1
 fi
 
 case "$1" in
@@ -133,7 +131,7 @@ case "$1" in
 		;;
 	*)
 		usage
-		exit 1
+		exit -1
 		;;
 esac
 
