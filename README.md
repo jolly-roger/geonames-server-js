@@ -51,7 +51,9 @@ total 1.6G
  1.9M admin2Codes.txt
  1.2G allCountries.txt
  349M alternateNames.txt
+  143 continents.txt
   31K countryInfo.txt
+ 719K dependencies.txt
   65K featureCodes_bg.txt
   56K featureCodes_en.txt
   56K featureCodes_nb.txt
@@ -71,5 +73,6 @@ total 376M
  269M allCountries.zip
   95M alternateNames.zip
  1.3M hierarchy.zip
+ 178K no-country.zip
   11M postalCodes.zip
 ```

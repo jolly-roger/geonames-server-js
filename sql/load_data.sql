@@ -1,15 +1,10 @@
-LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/continents.txt'
-  INTO TABLE `continent`
-  FIELDS TERMINATED BY ',';
-
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/allCountries.txt'
   INTO TABLE `geoname`;
 --LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/null.txt'
 --  INTO TABLE `geoname`;
 
-LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/countryInfo.txt'
-  INTO TABLE `country`
-   IGNORE 51 LINES;
+LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/hierarchy.txt'
+  INTO TABLE `hierarchy`;
 
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/iso-languagecodes.txt'
   INTO TABLE `iso_language`
@@ -20,8 +15,13 @@ UPDATE `iso_language` SET `iso_639_1` = NULL WHERE TRIM(`iso_639_1`) = '';
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/alternateNames.txt'
   INTO TABLE `alternate_name`;
 
-LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/hierarchy.txt'
-  INTO TABLE `hierarchy`;
+LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/continents.txt'
+  INTO TABLE `continent`
+  FIELDS TERMINATED BY ',';
+
+LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/countryInfo.txt'
+  INTO TABLE `country`
+   IGNORE 51 LINES;
 
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/admin1CodesASCII.txt'
   INTO TABLE `admin_code_ascii`;

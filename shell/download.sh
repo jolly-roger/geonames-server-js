@@ -49,19 +49,19 @@ usage() {
 
 download_info() {
 	echo
-	echo -e "\tDownloading data from geonames.org into [$txtDir] and [$zipDir] folders."
+	echo -e "Downloading data from geonames.org into [$txtDir] and [$zipDir] folders."
 	echo
 }
 
 unzip_info() {
 	echo
-	echo -e "\tUnzip archive from [$zipDir] into [$txtDir]"
+	echo -e "Unzip archive from [$zipDir] into [$txtDir]"
 	echo
 }
 
 clean_info() {
 	echo
-	echo -e "\tClean folder [$zipDir]"
+	echo -e "Clean folder [$zipDir]"
 	echo
 }
 
@@ -69,6 +69,7 @@ run_download_process() {
 	download_info
 
 	wget -c -O $zipDir/allCountries.zip $externalSourceDump/allCountries.zip
+	wget -c -O $zipDir/no-country.zip $externalSourceDump/no-country.zip
 	wget -c -O $zipDir/alternateNames.zip  $externalSourceDump/alternateNames.zip
 	wget -c -O $zipDir/hierarchy.zip  $externalSourceDump/hierarchy.zip
 
@@ -91,6 +92,10 @@ run_unzip_process() {
 	unzip_info
 
 	unzip -o $zipDir/allCountries.zip -d $txtDir/
+
+	unzip -o $zipDir/no-country.zip null.txt -d $zipDir/
+	mv $zipDir/null.txt $txtDir/dependencies.txt
+
 	unzip -o $zipDir/alternateNames.zip -d $txtDir/
 	unzip -o $zipDir/hierarchy.zip -d $txtDir/
 
@@ -102,6 +107,7 @@ run_clean() {
 	clean_info
 
 	rm -f $zipDir/allCountries.zip
+	rm -f $zipDir/no-country.zip
 	rm -f $zipDir/alternateNames.zip
 	rm -f $zipDir/hierarchy.zip
 	rm -f $zipDir/postalCodes.zip
