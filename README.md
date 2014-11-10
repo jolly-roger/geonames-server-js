@@ -1,5 +1,7 @@
 #Import data from source geonames.org
 
+DEVELOPMENT date 2014-11-11 
+
 Process `import data` consist of two stages:  
 - **downloading** data from external geonames.org  
 - **loading** data into the internal MySQL database  

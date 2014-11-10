@@ -91,48 +91,48 @@ show_database() {
 create_database() {
   echo
   echo "Create database [$dbName]."
-  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE $dbName CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE [$dbName] CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 }
 
 drop_database() {
   echo
-  echo "Truncate $dbName database"
-  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "DROP DATABASE IF EXISTS $dbName;"
+  echo "Truncate [$dbName] database"
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "DROP DATABASE IF EXISTS [$dbName];"
 }
 
 use_database() {
   echo
-  echo "Use database $dbName."
+  echo "Use database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "USE $dbName;"
 }
 
 load_structure() {
   echo
-  echo "Create structure of tables for database $dbName."
+  echo "Create structure of tables for database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/create_structure.sql
 }
 
 drop_structure() {
   echo
-  echo "Drop structure of tables for database $dbName."
+  echo "Drop structure of tables for database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/drop_structure.sql
 }
 
 load_data() {
   echo
-  echo "Load geonames data into database $dbName."
+  echo "Load geonames data into database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword --local-infile=1 $dbName < $sqlDir/load_data.sql
 }
 
 truncate_data() {
   echo
-  echo "Truncate data from database $dbName."
+  echo "Truncate data from database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/truncate_data.sql
 }
 
 add_indexes() {
   echo
-  echo "Add all index keys fro every table in database $dbName."
+  echo "Add all index keys fro every table in database [$dbName]."
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/add_index_keys.sql
 }
 
