@@ -1,6 +1,8 @@
 #Import data from source geonames.org
 
-DEVELOPMENT date 2014-11-11 
+DEVELOPMENT date 2014-11-11
+
+About [geonames.org](http://www.geonames.org/about.html).  
 
 Process `import data` consist of two stages:  
 - **downloading** data from external geonames.org  
