@@ -33,13 +33,14 @@ usage() {
   echo " [drop-structure] Removes all the table structure with data from the database $dbName."
   echo " [load-data] Imports geonames data into database $dbName."
   echo " [truncate-data] Remove geonames data from database $dbName."
+  echo " [add-indexes] Add indexes into every table in database $dbName."
   echo
   echo " The rest of parameters indicates the following information:"
   echo " -u <user> User name to access database server."
   echo " -p <password> User password to access database server."
-  echo " -h <host> Data Base Server address (default: localhost)."
-  echo " -P <port> Data Base Server Port (default: 3306)"
-  echo " -D <dbname> Data Base Name for the geonames.org data (default: geonames)"
+  echo " -h <host> Data Base Server address (default: $dbHost)."
+  echo " -P <port> Data Base Server Port (default: $dbPort)"
+  echo " -D <dbname> Data Base Name for the geonames.org data (default: $dbName)"
 
   exit -1
 }
@@ -129,6 +130,12 @@ truncate_data() {
   mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/truncate_data.sql
 }
 
+add_indexes() {
+  echo
+  echo "Add all index keys fro every table in database $dbName."
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword $dbName < $sqlDir/add_index_keys.sql
+}
+
 header
 
 while getopts "a:u:p:h:P:D:" opt;  do
@@ -157,6 +164,7 @@ case "$action" in
     create_database
     load_structure
     load_data
+    add_indexes
     ;;
   create-db)
     create_database
@@ -181,6 +189,10 @@ case "$action" in
   truncate-data)
     use_database
     truncate_data
+    ;;
+  add-indexes)
+    use_database
+    add_indexes
     ;;
   *)
     usage

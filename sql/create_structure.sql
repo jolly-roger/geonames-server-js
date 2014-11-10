@@ -21,16 +21,16 @@ CREATE TABLE `geoname` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `hierarchy` (
-  `parent_id` int(10) NULL,
-  `child_id` int(10) NULL,
-  `type` varchar(50) NOT NULL
+  `parent_id` INT(10) NULL,
+  `child_id` INT(10) NULL,
+  `type` VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `iso_language` (
-  `iso_639_3` char(3) NOT NULL,
-  `iso_639_2` varchar(100) NOT NULL,
-  `iso_639_1` varchar(2) NOT NULL,
-  `language_name` varchar(200) NOT NULL
+  `iso_639_3` CHAR(3) NOT NULL,
+  `iso_639_2` VARCHAR(100) NOT NULL,
+  `iso_639_1` VARCHAR(2) NOT NULL,
+  `language_name` VARCHAR(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `alternate_name` (
@@ -41,24 +41,24 @@ CREATE TABLE `alternate_name` (
   `is_preferred_name` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is an official/preferred name',
   `is_short_name` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this is a short name like \'California\' for \'State of California\'',
   `is_colloquial` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is a colloquial or slang term',
-  `is_historic` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past',
+  `is_historic` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `continent` (
-  `code` char(2) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `geoname_id` int(10) UNSIGNED NOT NULL
+  `code` CHAR(2) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `geoname_id` INT(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `country` (
   `iso2` CHAR(2) NOT NULL,
   `iso3` CHAR(3) NOT NULL,
-  `iso_numeric` INT(11) NULL,
+  `iso_numeric` INT(11) UNSIGNED NULL,
   `fips_code` VARCHAR(3) NOT NULL,
   `name` VARCHAR(200) NOT NULL,
   `capital` VARCHAR(200) NOT NULL,
   `area_in_sq_km` double NOT NULL DEFAULT 0,
-  `population` BIGINT(12) NOT NULL,
+  `population` BIGINT(12) UNSIGNED NOT NULL,
   `continent_code` CHAR(2) NOT NULL,
   `tld` CHAR(3) NOT NULL,
   `currency` CHAR(3) NOT NULL,
@@ -73,17 +73,17 @@ CREATE TABLE `country` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `admin_code_ascii` (
-  `code` char(15) NOT NULL,
-  `name` text,
-  `name_ascii` text,
-  `geoname_id` int(10) UNSIGNED NULL
+  `code` CHAR(15) NOT NULL,
+  `name` TEXT,
+  `name_ascii` TEXT,
+  `geoname_id` INT(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `admin_code` (
-  `code` char(15) NOT NULL,
-  `name` text,
-  `name_ascii` text,
-  `geoname_id` int(10) UNSIGNED NULL
+  `code` CHAR(15) NOT NULL,
+  `name` TEXT,
+  `name_ascii` TEXT,
+  `geoname_id` INT(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `feature` (
@@ -94,24 +94,24 @@ CREATE TABLE `feature` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `time_zone` (
-   `country_code` char(2) NULL,
-   `timezone_id` varchar(200) NOT NULL,
-   `gmt_offset` decimal(4,2) NULL,
-   `dst_offset` decimal(4,2) NULL,
-   `raw_offset` decimal(4,2) NULL
+   `country_code` CHAR(2) NULL,
+   `timezone_id` VARCHAR(200) NOT NULL,
+   `gmt_offset` DECIMAL(4,2) NULL,
+   `dst_offset` DECIMAL(4,2) NULL,
+   `raw_offset` DECIMAL(4,2) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `postal_code` (
-  `country` char(2) NOT NULL,
-  `postal_code` varchar(20) NOT NULL,
+  `country_code` CHAR(2) NOT NULL,
+  `postal_code` VARCHAR(20) NOT NULL,
   `place_name` TEXT,
   `admin_name1` TEXT,
-  `admin_code1` varchar(80) NOT NULL,
+  `admin_code1` VARCHAR(80) NOT NULL,
   `admin_name2` TEXT,
-  `admin_code2` varchar(80) NOT NULL,
+  `admin_code2` VARCHAR(80) NOT NULL,
   `admin_name3` TEXT,
-  `admin_code3` varchar(80) NOT NULL,
-  `latitude` decimal(10,7) NULL,
-  `longitude` decimal(10,7) NULL,
-  `accuracy` tinyint(2) NULL
+  `admin_code3` VARCHAR(80) NOT NULL,
+  `latitude` DECIMAL(10,7) NULL,
+  `longitude` DECIMAL(10,7) NULL,
+  `accuracy` TINYINT(2) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
