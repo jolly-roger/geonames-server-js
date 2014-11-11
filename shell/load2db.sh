@@ -48,11 +48,11 @@ usage() {
 display_parameters() {
   echo -e "Database parameters being used:"
   echo -e "\taction: $action"
+  echo -e "\tdbname: $dbName"
   echo -e "\tusername: $dbUsername"
   echo -e "\tpassword: $dbPassword"
   echo -e "\thost: $dbHost"
   echo -e "\tport: $dbPort"
-  echo -e "\tdbname: $dbName"
 }
 
 check_action() {
