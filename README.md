@@ -1,7 +1,7 @@
 #Import data from source geonames.org
 
-VERSION 1.0.0
-DEVELOPMENT date 2014-11-11
+VERSION 1.0.0  
+DEVELOPMENT date 2014-11-11  
 
 About [geonames.org](http://www.geonames.org/about.html).  
 
