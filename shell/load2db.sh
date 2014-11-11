@@ -91,13 +91,13 @@ show_database() {
 create_database() {
   echo
   echo "Create database [$dbName]."
-  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE [$dbName] CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "CREATE DATABASE $dbName CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 }
 
 drop_database() {
   echo
   echo "Truncate [$dbName] database"
-  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "DROP DATABASE IF EXISTS [$dbName];"
+  mysql -h$dbHost -P$dbPort -u$dbUsername -p$dbPassword -Bse "DROP DATABASE IF EXISTS $dbName;"
 }
 
 use_database() {
