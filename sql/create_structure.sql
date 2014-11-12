@@ -79,7 +79,7 @@ CREATE TABLE `geonames_admin_code_ascii` (
   `geoname_id` INT(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `admin_code` (
+CREATE TABLE `geonames_admin_code` (
   `code` CHAR(15) NOT NULL,
   `name` TEXT,
   `name_ascii` TEXT,
