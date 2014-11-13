@@ -160,7 +160,6 @@ check_password
 
 case "$action" in
   import-data)
-    drop_database
     create_database
     load_structure
     load_data
