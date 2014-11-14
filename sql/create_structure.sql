@@ -17,21 +17,36 @@ CREATE TABLE `geonames_geoname` (
   `elevation` VARCHAR(15) NOT NULL DEFAULT 0 COMMENT 'in meters',
   `gtopo30` VARCHAR(15) NOT NULL COMMENT ' digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat',
   `timezone_id` VARCHAR(40) NOT NULL,
-  `mod_date` DATE NULL COMMENT 'date of last modification in yyyy-MM-dd format'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `mod_date` DATE NULL COMMENT 'date of last modification in yyyy-MM-dd format',
+  KEY `geoname_id`(`geoname_id`),
+  KEY `timezone_id`(`timezone_id`),
+  KEY `name` (`name`(80) ASC),
+  KEY `ascii_name` (`ascii_name`(100) ASC),
+  KEY `latitude` (`latitude`),
+  KEY `longitude` (`longitude`),
+  KEY `feature_class` (`feature_class` ASC),
+  KEY `feature_code` (`feature_code` ASC),
+  KEY `country_code` (`country_code` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_hierarchy` (
   `parent_id` INT(10) NULL,
   `child_id` INT(10) NULL,
-  `type` VARCHAR(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `type` VARCHAR(50) NOT NULL,
+  KEY `parent_id` (`parent_id`),
+  KEY `child_id` (`child_id`),
+  KEY `type` (`type` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_iso_language` (
   `iso_639_3` CHAR(3) NOT NULL,
   `iso_639_2` VARCHAR(100) NOT NULL,
   `iso_639_1` VARCHAR(2) NOT NULL,
-  `language_name` VARCHAR(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `language_name` VARCHAR(200) NOT NULL,
+  KEY `iso_639_3` (`iso_639_3` ASC),
+  KEY `iso_639_2` (`iso_639_2` ASC),
+  KEY `iso_639_1` (`iso_639_1` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_alternate_name` (
   `alternate_name_id` INT(10) UNSIGNED NOT NULL COMMENT 'the id of this alternate name',
@@ -41,14 +56,21 @@ CREATE TABLE `geonames_alternate_name` (
   `is_preferred_name` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is an official/preferred name',
   `is_short_name` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this is a short name like \'California\' for \'State of California\'',
   `is_colloquial` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is a colloquial or slang term',
-  `is_historic` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `is_historic` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past',
+  KEY `alternate_name_id` (`alternate_name_id` ASC),
+  KEY `geoname_id` (`geoname_id` ASC),
+  KEY `iso_language` (`iso_language` ASC),
+  KEY `alternate_name` (`alternate_name` (100) ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_continent` (
   `code` CHAR(2) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
-  `geoname_id` INT(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `geoname_id` INT(10) UNSIGNED NOT NULL,
+  KEY `code` (`code` ASC),
+  KEY `name` (`name` ASC),
+  KEY `geoname_id` (`geoname_id` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_country` (
   `iso2` CHAR(2) NOT NULL,
@@ -69,37 +91,53 @@ CREATE TABLE `geonames_country` (
   `geoname_id` INT(10) UNSIGNED NULL,
   `languages` VARCHAR(200) NOT NULL,
   `neighbours` CHAR(100) NOT NULL,
-  `equivalent_fips_code` CHAR(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `equivalent_fips_code` CHAR(10) NOT NULL,
+  KEY`iso2` (`iso2` ASC),
+  KEY`iso3` (`iso3` ASC),
+  KEY`iso_numeric` (`iso_numeric` ASC),
+  KEY`fips_code` (`fips_code` ASC),
+  KEY`geoname_id` (`geoname_id` ASC),
+  KEY`continent_code` (`continent_code` ASC),
+  KEY`name` (`name`(80) ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_admin_code_ascii` (
   `code` CHAR(15) NOT NULL,
   `name` TEXT,
   `name_ascii` TEXT,
-  `geoname_id` INT(10) UNSIGNED NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `geoname_id` INT(10) UNSIGNED NULL,
+  KEY `code` (`code` ASC),
+  KEY `geoname_id` (`geoname_id` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_admin_code` (
   `code` CHAR(15) NOT NULL,
   `name` TEXT,
   `name_ascii` TEXT,
-  `geoname_id` INT(10) UNSIGNED NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `geoname_id` INT(10) UNSIGNED NULL,
+  KEY `code` (`code` ASC),
+  KEY `geoname_id` (`geoname_id` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_feature` (
   `language` CHAR(2) NOT NULL,
   `code` CHAR(10) NOT NULL,
   `name` VARCHAR(200) NOT NULL,
-  `description` TEXT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `description` TEXT,
+  KEY `language` (`language` ASC),
+  KEY `code` (`code` ASC),
+  KEY `name` (`name` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_time_zone` (
-   `country_code` CHAR(2) NULL,
-   `timezone_id` VARCHAR(200) NOT NULL,
-   `gmt_offset` DECIMAL(4,2) NULL,
-   `dst_offset` DECIMAL(4,2) NULL,
-   `raw_offset` DECIMAL(4,2) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `country_code` CHAR(2) NULL,
+  `timezone_id` VARCHAR(200) NOT NULL,
+  `gmt_offset` DECIMAL(4,2) NULL,
+  `dst_offset` DECIMAL(4,2) NULL,
+  `raw_offset` DECIMAL(4,2) NULL,
+  KEY `country_code` (`country_code` ASC),
+  KEY `timezone_id` (`timezone_id` ASC)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_postal_code` (
   `country_code` CHAR(2) NOT NULL,
@@ -113,5 +151,9 @@ CREATE TABLE `geonames_postal_code` (
   `admin_code3` VARCHAR(80) NOT NULL,
   `latitude` DECIMAL(10,7) NULL,
   `longitude` DECIMAL(10,7) NULL,
-  `accuracy` TINYINT(2) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+  `accuracy` TINYINT(2) NULL,
+  KEY `country_code` (`country_code` ASC),
+  KEY `postal_code` (`postal_code` ASC),
+  KEY `latitude` (`latitude`),
+  KEY `longitude` (`longitude`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

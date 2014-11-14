@@ -7,7 +7,7 @@ About [geonames.org](http://www.geonames.org/about.html).
 
 Process `import data` consist of two stages:  
 - **downloading** data from external geonames.org  
-- **loading** data into the internal MySQL database  
+- **importing** data into the internal MySQL database  
 
 ###DOWNLOADING data
 
@@ -26,18 +26,18 @@ Just run without options - and see descriptions about all available options
 $ bash ./shell/download.sh
 ```
 
-###LOADING data
+###IMPORT data
 
-For loading external data - call the next shell script with option `-a import-data`
+For importing external data - call the next shell script with option `-a import-data`
 and database options `-u username -p password`
 ```bash
-$ bash ./shell/load2db.sh -a import-data -u username -p password
+$ bash ./shell/import.sh -a import-data -u username -p password
 ```
 
 For running shell script with other options see descriptions.
 Just run without options - and see descriptions about all available options
 ```bash
-$ bash ./shell/load2db.sh
+$ bash ./shell/import.sh
 ```
 
 ##Additionaly
