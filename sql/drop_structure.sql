@@ -6,6 +6,6 @@ DROP TABLE IF EXISTS `geonames_iso_language`;
 DROP TABLE IF EXISTS `geonames_admin_code_ascii`;
 DROP TABLE IF EXISTS `geonames_admin_code`;
 DROP TABLE IF EXISTS `geonames_feature`;
-DROP TABLE IF EXISTS `geonames_time_zone`;
+DROP TABLE IF EXISTS `geonames_timezone`;
 DROP TABLE IF EXISTS `geonames_continent`;
 DROP TABLE IF EXISTS `geonames_postal_code`;

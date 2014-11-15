@@ -80,12 +80,6 @@ run_download_process() {
 	wget -c -O $txtDir/admin2Codes.txt  $externalSourceDump/admin2Codes.txt
 	wget -c -O $txtDir/timeZones.txt  $externalSourceDump/timeZones.txt
 	wget -c -O $txtDir/featureCodes_en.txt  $externalSourceDump/featureCodes_en.txt
-	wget -c -O $txtDir/featureCodes_ru.txt  $externalSourceDump/featureCodes_ru.txt
-	wget -c -O $txtDir/featureCodes_bg.txt  $externalSourceDump/featureCodes_bg.txt
-	wget -c -O $txtDir/featureCodes_nb.txt  $externalSourceDump/featureCodes_nb.txt
-	wget -c -O $txtDir/featureCodes_nn.txt  $externalSourceDump/featureCodes_nn.txt
-	wget -c -O $txtDir/featureCodes_no.txt  $externalSourceDump/featureCodes_no.txt
-	wget -c -O $txtDir/featureCodes_sv.txt  $externalSourceDump/featureCodes_sv.txt
 }
 
 run_unzip_process() {
