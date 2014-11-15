@@ -59,13 +59,7 @@ total 1.6G
   143 continents.txt
   31K countryInfo.txt
  719K dependencies.txt
-  65K featureCodes_bg.txt
   56K featureCodes_en.txt
-  56K featureCodes_nb.txt
-  56K featureCodes_nn.txt
-  56K featureCodes_no.txt
- 112K featureCodes_ru.txt
-  57K featureCodes_sv.txt
  6.0M hierarchy.txt
  125K iso-languagecodes.txt
   76M postalCodes.txt
