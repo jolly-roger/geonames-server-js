@@ -21,16 +21,9 @@ CREATE TABLE `geonames_geoname` (
   KEY `geoname_id`(`geoname_id`),
   KEY `name` (`name`),
   KEY `ascii_name` (`ascii_name`),
-  KEY `admin1` (`admin1`),
-  KEY `admin2` (`admin2`),
-  KEY `admin3` (`admin3`),
-  KEY `admin4` (`admin4`),
   KEY `latitude` (`latitude`),
   KEY `longitude` (`longitude`),
-  KEY `feature_class` (`feature_class`),
-  KEY `feature_code` (`feature_code`),
-  KEY `country_code` (`country_code`),
-  KEY `timezone`(`timezone`)
+  KEY `country_code` (`country_code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `geonames_hierarchy` (
@@ -161,12 +154,6 @@ CREATE TABLE `geonames_postal_code` (
   KEY `country_code` (`country_code`),
   KEY `postal_code` (`postal_code`),
   KEY `place_name` (`place_name`),
-  KEY `admin_name1` (`admin_name1`),
-  KEY `admin_code1` (`admin_code1`),
-  KEY `admin_name2` (`admin_name2`),
-  KEY `admin_code2` (`admin_code2`),
-  KEY `admin_name3` (`admin_name3`),
-  KEY `admin_code4` (`admin_code3`),
   KEY `latitude` (`latitude`),
   KEY `longitude` (`longitude`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

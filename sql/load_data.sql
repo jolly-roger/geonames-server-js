@@ -1,5 +1,13 @@
 -- change /home/kolegm/github/repos/geonames_import on your project path
 
+-- change slowest `Repair with keycache` to more quickly `Repair with sort`
+SET @old_myisam_sort_buffer_size = @@myisam_sort_buffer_size;
+SET @old_myisam_max_sort_file_size = @@myisam_max_sort_file_size;
+SET @old_key_buffer_size = @@key_buffer_size;
+SET SESSION myisam_sort_buffer_size = 256*1024*1024; -- 256 MB
+SET GLOBAL myisam_max_sort_file_size = 16*1024*1024*1024; -- 16 GB
+SET GLOBAL repair_cache.key_buffer_size = 1024*1024*1024; -- 1 GB
+
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/allCountries.txt'
   INTO TABLE `geonames_geoname`;
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/dependencies.txt'
@@ -37,3 +45,13 @@ LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/timeZones.t
 
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/postalCodes.txt'
   INTO TABLE `geonames_postal_code`;
+
+SET @old_myisam_sort_buffer_size = @@myisam_sort_buffer_size;
+SET @old_myisam_max_sort_file_size = @@myisam_max_sort_file_size;
+SET @old_read_buffer_size = @@read_buffer_size;
+SET @old_key_buffer_size = @@key_buffer_size;
+
+SET SESSION myisam_sort_buffer_size = @old_myisam_sort_buffer_size;
+SET GLOBAL myisam_max_sort_file_size = @old_myisam_max_sort_file_size;
+SET GLOBAL read_buffer_size = @old_read_buffer_size;
+SET GLOBAL repair_cache.key_buffer_size = @old_key_buffer_size;
