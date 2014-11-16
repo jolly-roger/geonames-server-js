@@ -46,11 +46,6 @@ LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/timeZones.t
 LOAD DATA INFILE '/home/kolegm/github/repos/geonames_import/data/txt/postalCodes.txt'
   INTO TABLE `geonames_postal_code`;
 
-SET @old_myisam_sort_buffer_size = @@myisam_sort_buffer_size;
-SET @old_myisam_max_sort_file_size = @@myisam_max_sort_file_size;
-SET @old_read_buffer_size = @@read_buffer_size;
-SET @old_key_buffer_size = @@key_buffer_size;
-
 SET SESSION myisam_sort_buffer_size = @old_myisam_sort_buffer_size;
 SET GLOBAL myisam_max_sort_file_size = @old_myisam_max_sort_file_size;
 SET GLOBAL read_buffer_size = @old_read_buffer_size;
