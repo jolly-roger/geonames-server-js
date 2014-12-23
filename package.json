@@ -1,0 +1,23 @@
+{
+  "name": "geonames-import",
+  "version": "1.0.1",
+  "description": "Import geonames DB",
+  "keywords": [
+    "geonames.org"
+  ],
+  "engines": {
+    "bash": ">= 4.3.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kolegm/geonames-import.git"
+  },
+  "author": {
+    "name": "Oleg Kravchuk",
+    "email": "kolegm.real@gmail.com"
+  },
+  "license": {
+    "type": "MIT",
+    "path": "./LICENSE"
+  }
+}
