@@ -26,12 +26,12 @@ usage() {
   echo " $0 -a <action> -u <user> -p <password> -h <host> -P <port> -D <dbname>"
   echo
   echo " Available values for option <action>: "
-  echo " [import-data] == Recommended usage == Create database $dbName with table structure, and load all geonames data"
+  echo " [load-data] Imports geonames data into database $dbName."
+  echo " [import-data] Use it only once. Create database $dbName with table structure, and load all geonames data"
   echo " [create-db] Creates the mysql empty database $dbName."
   echo " [drop-db] Removes the mysql database $dbName completely."
   echo " [create-structure] Creates the table structure with no data in the database $dbName."
   echo " [drop-structure] Removes all the table structure with data from the database $dbName."
-  echo " [load-data] Imports geonames data into database $dbName."
   echo " [truncate-data] Remove geonames data from database $dbName."
   echo
   echo " The rest of parameters indicates the following information:"
