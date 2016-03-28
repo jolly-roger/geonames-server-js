@@ -6,12 +6,13 @@ const config = require('config');
 
 
 const serverConfig = config.get('server');
+const pathToWeb = path.join(__dirname, '../../build/web');
 
 
 module.exports = function () {
     const app = express();
     
-    app.use(express.static(path.join(__dirname, '../web')));
+    app.use(express.static(pathToWeb));
     
     app.listen(serverConfig.port);
     

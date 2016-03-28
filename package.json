@@ -4,7 +4,8 @@
     "email": "igor.onyshchenko@gmail.com"
   },
   "scripts": {
-    "start": "gulp && node src/backend"
+    "start": "gulp && npm run start-server",
+    "start-server": "node src/backend"
   },
   "engines": {
     "node": ">=5.4.1"
