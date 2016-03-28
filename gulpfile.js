@@ -10,9 +10,9 @@ var path = require('path');
 gulp.task('babel', ['babel-web']);
 
 gulp.task('babel-web', ['clear'], () => {
-    return gulp.src('src/web/*.js')
+    return gulp.src('src/web/**/*.js')
         .pipe(babel({
-            presets: ['es2015']
+            presets: ['react', 'es2015']
         }))
         .pipe(gulp.dest('build/web/es5'));
 });
