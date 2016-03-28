@@ -7,20 +7,27 @@ var browserify = require('gulp-browserify');
 var path = require('path');
 
 
-gulp.task('babel', ['clear'], () => {
-    return gulp.src('src/**/*.js')
+gulp.task('babel', ['babel-web']);
+
+gulp.task('babel-web', ['clear'], () => {
+    return gulp.src('src/web/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(gulp.dest('build/es5'));
+        .pipe(gulp.dest('build/web/es5'));
+});
+
+gulp.task('views', ['clear'], function () {
+    return gulp.src('src/web/**/*.html')
+        .pipe(gulp.dest('build/web'));
 });
 
 gulp.task('browserify', ['babel'], () => {
-    return gulp.src('build/es5/index.js')
+    return gulp.src('build/web/es5/index.js')
         .pipe(browserify({
-            basedir: './build/es5/'
+            basedir: './build/web/es5'
         }))
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('build/web'));
 });
 
 gulp.task('clear', () => {
@@ -28,4 +35,4 @@ gulp.task('clear', () => {
         .pipe(clean());
 });
 
-gulp.task('default', ['clear', 'babel', 'browserify']);
+gulp.task('default', ['browserify', 'views']);
