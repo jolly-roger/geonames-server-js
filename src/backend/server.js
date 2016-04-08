@@ -6,13 +6,16 @@ const config = require('config');
 
 
 const serverConfig = config.get('server');
-const pathToWeb = path.join(__dirname, '../../build/web');
+const pathToWeb = path.join(__dirname, '../../dist');
+const indexFile = path.join(pathToWeb, 'index.html');
 
 
 module.exports = function () {
     const app = express();
     
-    app.use(express.static(pathToWeb));
+    app.use(express.static(pathToWeb), (req, res) => {
+        res.sendFile(indexFile);
+    });
     
     app.listen(serverConfig.port);
     
