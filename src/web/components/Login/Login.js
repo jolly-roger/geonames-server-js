@@ -13,6 +13,8 @@ export default class Login extends Component {
             err: ''
         };
         
+        this.userLoggedin = new Event('user.loggedin');
+        
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePassChange = this.handlePassChange.bind(this);
@@ -43,10 +45,12 @@ export default class Login extends Component {
                 
                 const {location} = this.props;
                 
+                document.dispatchEvent(this.userLoggedin);
+                
                 if (location.state && location.state.nextPathname) {
                     this.context.router.replace(location.state.nextPathname);
                 } else {
-                    this.context.router.replace('/');
+                    this.context.router.replace('/import');
                 }
             } else {
                 this.setState({

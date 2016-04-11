@@ -11,8 +11,12 @@ export default class App extends Component {
         super();
         
         this.state = {
-            loggedIn: false
+            isLogedin: false
         };
+        
+        this.onLoggedin = this.onLoggedin.bind(this);
+        
+        this.onLoggedinListener = document.addEventListener('user.loggedin', this.onLoggedin);
     }
     
     getRoutes () {
@@ -31,6 +35,14 @@ export default class App extends Component {
             ]
         };
     };
+    
+    onLoggedin() {
+        this.setState({isLogedin: true});
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener(this.onLoggedin);
+    }
     
     render() {
         let routes = this.getRoutes();
