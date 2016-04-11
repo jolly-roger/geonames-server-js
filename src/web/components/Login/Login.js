@@ -81,7 +81,7 @@ export default class Login extends Component {
                 Password:<input type="password" value={this.state.pass}
                     onChange={this.handlePassChange} />
                 <br />
-                <input type="submit" />
+                <input type="submit" className="button" />
                 <div>{this.state.err}</div>
             </form>
         );

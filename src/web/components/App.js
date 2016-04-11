@@ -7,18 +7,6 @@ import Import from './Import';
 
 
 export default class App extends Component {
-    constructor() {
-        super();
-        
-        this.state = {
-            isLogedin: false
-        };
-        
-        this.onLoggedin = this.onLoggedin.bind(this);
-        
-        this.onLoggedinListener = document.addEventListener('user.loggedin', this.onLoggedin);
-    }
-    
     getRoutes () {
         return {
             path: '/',
@@ -35,14 +23,6 @@ export default class App extends Component {
             ]
         };
     };
-    
-    onLoggedin() {
-        this.setState({isLogedin: true});
-    }
-    
-    componentWillUnmount() {
-        document.removeEventListener(this.onLoggedin);
-    }
     
     render() {
         let routes = this.getRoutes();
