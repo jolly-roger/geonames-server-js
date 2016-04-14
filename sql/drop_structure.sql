@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `geonames_geoname`;
+DROP TABLE IF EXISTS `geonames_alternate_name`;
+DROP TABLE IF EXISTS `geonames_hierarchy`;
+DROP TABLE IF EXISTS `geonames_country`;
+DROP TABLE IF EXISTS `geonames_iso_language`;
+DROP TABLE IF EXISTS `geonames_admin_code_ascii`;
+DROP TABLE IF EXISTS `geonames_admin_code`;
+DROP TABLE IF EXISTS `geonames_feature`;
+DROP TABLE IF EXISTS `geonames_timezone`;
+DROP TABLE IF EXISTS `geonames_continent`;
+DROP TABLE IF EXISTS `geonames_postal_code`;

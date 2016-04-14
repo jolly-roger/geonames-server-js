@@ -1,0 +1,11 @@
+TRUNCATE TABLE `geonames_geoname`;
+TRUNCATE TABLE `geonames_alternate_name`;
+TRUNCATE TABLE `geonames_hierarchy`;
+TRUNCATE TABLE `geonames_country`;
+TRUNCATE TABLE `geonames_iso_language`;
+TRUNCATE TABLE `geonames_admin_code_ascii`;
+TRUNCATE TABLE `geonames_admin_code`;
+TRUNCATE TABLE `geonames_feature`;
+TRUNCATE TABLE `geonames_timezone`;
+TRUNCATE TABLE `geonames_continent`;
+TRUNCATE TABLE `geonames_postal_code`;
