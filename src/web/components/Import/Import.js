@@ -12,15 +12,20 @@ export default class Import extends Component {
     render() {
         return (
             <div>
-                <div>Create DataBase</div>
-                <div>
-                    Download GeoNames
-                    <br />
-                    <button ref="downloadBtn" className="button">Download</button>
-                    <DownloadingProgress />
+                <div className="callout">
+                    <h5>Create DataBase</h5>
                 </div>
-                <div>Import GeoNames</div>
-                <div>Index GeoNames</div>
+                <div className="callout">
+                    <h5>Download GeoNames</h5>
+                    <DownloadingProgress />
+                    <button ref="downloadBtn" className="button">Download</button>
+                </div>
+                <div className="callout">
+                    <h5>Import GeoNames</h5>
+                </div>
+                <div className="callout">
+                    <h5>Index GeoNames</h5>
+                </div>
             </div>
         );
     }
