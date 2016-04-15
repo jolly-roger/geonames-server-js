@@ -3,47 +3,51 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const config = require('config');
 
 
 const emitter = require('./eventEmitter');
 
 
-const externalSourceDump = 'http://download.geonames.org/export/dump';
-const externalSourceZip = 'http://download.geonames.org/export/zip';
-const zipDir = path.join(__dirname, '../../data/zip');
-const txtDir = path.join(__dirname, '../../data/txt');
-const filesToDownload = [{
-        source: externalSourceDump + '/allCountries.zip',
-        target: path.join(zipDir, 'allCountries.zip')
-    }, {
-        source: externalSourceDump + '/no-country.zip',
-        target: path.join(zipDir, 'no-country.zip')
-    }, {
-        source: externalSourceDump + '/alternateNames.zip',
-        target: path.join(zipDir, 'alternateNames.zip')
-    }, {
-        source: externalSourceDump + '/hierarchy.zip',
-        target: path.join(zipDir, 'hierarchy.zip')
-    }, {
-        source: externalSourceZip + '/allCountries.zip',
-        target: path.join(zipDir, 'postalCodes.zip')
-    }, {
-        source: externalSourceDump + '/countryInfo.txt',
-        target: path.join(txtDir, 'countryInfo.txt')
-    }, {
-        source: externalSourceDump + '/admin1CodesASCII.txt',
-        target: path.join(txtDir, 'admin1CodesASCII.txt')
-    }, {
-        source: externalSourceDump + '/admin2Codes.txt',
-        target: path.join(txtDir, 'admin2Codes.txt')
-    }, {
-        source: externalSourceDump + '/timeZones.txt',
-        target: path.join(txtDir, 'timeZones.txt')
-    }, {
-        source: externalSourceDump + '/featureCodes_en.txt',
-        target: path.join(txtDir, 'featureCodes_en.txt')
-    }];
+const dataConfig = config.get('data');
+const dataStatusFile = path.join(__dirname, dataConfig.dir, 'data-status.json');
+let dataStatus = {};
 
+
+function initDataStatus() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(dataStatusFile, (err, data) => {
+            if (err) {
+                resolve(generateInitDataStatus());
+            }
+            
+            try {
+                resolve(JSON.parse(data));
+            } catch (ex) {
+                resolve(generateInitDataStatus());
+            }
+        });
+    });
+}
+
+function generateInitDataStatus() {
+    let dataStatus = {};
+                
+    dataConfig.files.forEach((file) => {
+        let fileId = getFileId(file.target);
+       
+        dataStatus[fileId] = {
+            fileName: file.target,
+            progress: 0
+        };
+    });
+    
+    return dataStatus;
+}
+
+function getFileId(fileName) {
+    return fileName.replace('.', '-');
+}
 
 function downloadFile(url, dest) {
     return new Promise((resolve, reject) => {
@@ -58,17 +62,17 @@ function downloadFile(url, dest) {
             response.pipe(file);
             
             response.on('data', (chunk) => {
+                let fileId = getFileId(fileName);
+                
                 downloadedSize += parseInt(chunk.length);
                 currProgress = Math.round((downloadedSize / size * 100) * 100) / 100;
 
                 if (currProgress > prevProgress) {
                     prevProgress = currProgress;
+                    
+                    dataStatus[fileId].progress = currProgress;
 
-                    emitter.emit('download-progress', {
-                        fileName: fileName,
-                        fileId: fileName.replace('.', '-'),
-                        progress: currProgress
-                    });
+                    emitter.emit('download-progress', dataStatus);
                 }
             });
             
@@ -83,11 +87,35 @@ function downloadFile(url, dest) {
 }
 
 module.exports = function () {
-    Promise.all(filesToDownload.map((fileToDownload) => {
-        return downloadFile(fileToDownload.source, fileToDownload.target);
-    }))
-    .then(() => {
-        console.log('Done');
+    initDataStatus()
+    .then((initDataStatus) => {
+        dataStatus = initDataStatus;
+        
+        Promise.all(dataConfig.files.map((file) => {
+            let fileId = getFileId(file.target);
+            
+            if (dataStatus[fileId].progress != 100) {
+                let source = (file.source.toLowerCase().indexOf('.zip') > -1) ?
+                        dataConfig.sourceZip + '/' + file.source
+                    :
+                        dataConfig.sourceDump + '/' + file.source
+                ;
+                let target = (file.target.toLowerCase().indexOf('.zip') > -1) ?
+                        path.join(__dirname, dataConfig.dir, 'zip', file.target)
+                    :
+                        path.join(__dirname, dataConfig.dir, 'txt', file.target)
+                ;
+                
+                return downloadFile(source, target);
+            } else {
+                return Promise.resolve();
+            }
+        }))
+        .then(() => {
+            fs.writeFile(dataStatusFile, JSON.stringify(dataStatus), (err) => {});
+            
+            emitter.emit('download-progress', dataStatus);
+        });
     });
 };
 

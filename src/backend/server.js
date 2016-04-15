@@ -31,6 +31,12 @@ module.exports = function () {
         }
     });
     
+    app.get('/api/import/download-status', (req, res) => {
+        downloader();
+        
+        res.send();
+    });
+    
     app.get('/api/import/download', (req, res) => {
         downloader();
         

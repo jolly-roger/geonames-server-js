@@ -4,5 +4,42 @@
     },
     "users": {
         "admin": "21232f297a57a5a743894a0e4a801fc3"
+    },
+    "data": {
+        "sourceDump": "http://download.geonames.org/export/dump",
+        "sourceZip": "http://download.geonames.org/export/zip",
+        "dir": "../../data",
+        "files": [{
+                "source": "allCountries.zip",
+                "target": "allCountries.zip"
+            }, {
+                "source": "no-country.zip",
+                "target": "no-country.zip"
+            }, {
+                "source": "alternateNames.zip",
+                "target": "alternateNames.zip"
+            }, {
+                "source": "hierarchy.zip",
+                "target": "hierarchy.zip"
+            }, {
+                "source": "allCountries.zip",
+                "target": "postalCodes.zip"
+            }, {
+                "source": "countryInfo.txt",
+                "target": "countryInfo.txt"
+            }, {
+                "source": "admin1CodesASCII.txt",
+                "target": "admin1CodesASCII.txt"
+            }, {
+                "source": "admin2Codes.txt",
+                "target": "admin2Codes.txt"
+            }, {
+                "source": "timeZones.txt",
+                "target": "timeZones.txt"
+            }, {
+                "source": "featureCodes_en.txt",
+                "target": "featureCodes_en.txt"
+            }
+        ]
     }
 }
