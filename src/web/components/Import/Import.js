@@ -5,7 +5,7 @@ import DownloadingProgress from './DownloadingProgress';
 export default class Import extends Component {
     componentDidMount() {
         this.refs.downloadBtn.addEventListener('click', (ev) => {
-            fetch('/api/import/download');
+            fetch('/api/import/download-data');
         });
     }
     

@@ -31,16 +31,17 @@ module.exports = function () {
         }
     });
     
-    app.get('/api/import/download-status', (req, res) => {
-        downloader();
+    app.get('/api/import/download-data', (req, res) => {
+        downloader.downloadData();
         
         res.send();
     });
     
-    app.get('/api/import/download', (req, res) => {
-        downloader();
-        
-        res.send();
+    app.get('/api/import/get-data-status', (req, res) => {
+        downloader.getDataSatatus()
+        .then((dataStatus) => {
+            res.send(dataStatus);
+        });
     });
     
     app.use(express.static(pathToWeb), (req, res) => {

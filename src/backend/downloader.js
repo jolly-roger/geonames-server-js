@@ -30,19 +30,35 @@ function initDataStatus() {
     });
 }
 
+function verifyInitDataStatus(initDataStatus) {
+    return Promise.all(Object.keys(initDataStatus).map((fileId) => {
+        return new Promise((resolve, reject) => {
+            let file = initDataStatus[fileId];
+
+            fs.stat(getTarget(file.fileName), (err, stat) => {
+                if (err) {
+                    file.progress = 0
+                }
+                
+                resolve(file);
+            })
+        });
+    }));
+}
+
 function generateInitDataStatus() {
-    let dataStatus = {};
+    let initDataStatus = {};
                 
     dataConfig.files.forEach((file) => {
         let fileId = getFileId(file.target);
        
-        dataStatus[fileId] = {
+        initDataStatus[fileId] = {
             fileName: file.target,
             progress: 0
         };
     });
     
-    return dataStatus;
+    return initDataStatus;
 }
 
 function getFileId(fileName) {
@@ -65,7 +81,7 @@ function downloadFile(url, dest) {
                 let fileId = getFileId(fileName);
                 
                 downloadedSize += parseInt(chunk.length);
-                currProgress = Math.round((downloadedSize / size * 100) * 100) / 100;
+                currProgress = Math.round((downloadedSize / size * 100));
 
                 if (currProgress > prevProgress) {
                     prevProgress = currProgress;
@@ -86,37 +102,77 @@ function downloadFile(url, dest) {
     });
 }
 
-module.exports = function () {
-    initDataStatus()
-    .then((initDataStatus) => {
-        dataStatus = initDataStatus;
-        
-        Promise.all(dataConfig.files.map((file) => {
-            let fileId = getFileId(file.target);
-            
-            if (dataStatus[fileId].progress != 100) {
-                let source = (file.source.toLowerCase().indexOf('.zip') > -1) ?
-                        dataConfig.sourceZip + '/' + file.source
-                    :
-                        dataConfig.sourceDump + '/' + file.source
-                ;
-                let target = (file.target.toLowerCase().indexOf('.zip') > -1) ?
-                        path.join(__dirname, dataConfig.dir, 'zip', file.target)
-                    :
-                        path.join(__dirname, dataConfig.dir, 'txt', file.target)
-                ;
+function getSource(source) {
+    return (source.toLowerCase().indexOf('.zip') > -1) ?
+            dataConfig.sourceZip + '/' + source
+        :
+            dataConfig.sourceDump + '/' + source
+    ;
+}
+
+function getTarget(target) {
+    return (target.toLowerCase().indexOf('.zip') > -1) ?
+            path.join(__dirname, dataConfig.dir, 'zip', target)
+        :
+            path.join(__dirname, dataConfig.dir, 'txt', target)
+    ;
+}
+
+module.exports = {
+    downloadData: function () {
+        return initDataStatus()
+            .then((initDataStatus) => {
+                return verifyInitDataStatus(initDataStatus);
+            })
+            .then((verifiedInitDataStatus) => {
+                let initDataStatus = {};
                 
-                return downloadFile(source, target);
-            } else {
-                return Promise.resolve();
-            }
-        }))
-        .then(() => {
-            fs.writeFile(dataStatusFile, JSON.stringify(dataStatus), (err) => {});
-            
-            emitter.emit('download-progress', dataStatus);
-        });
-    });
+                verifiedInitDataStatus.forEach((file) => {
+                    initDataStatus[getFileId(file.fileName)] = file;
+                });
+                
+                return initDataStatus;
+            })
+            .then((initDataStatus) => {
+                dataStatus = initDataStatus;
+                
+                Promise.all(dataConfig.files.map((file) => {
+                    let fileId = getFileId(file.target);
+                    
+                    if (dataStatus[fileId].progress != 100) {
+                        return downloadFile(getSource(file.source), getTarget(file.target));
+                    } else {
+                        return Promise.resolve();
+                    }
+                }))
+                .then(() => {
+                    fs.writeFile(dataStatusFile, JSON.stringify(dataStatus), (err) => {});
+                    
+                    emitter.emit('download-progress', dataStatus);
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    },
+    getDataSatatus: function() {
+        return initDataStatus()
+            .then((initDataStatus) => {
+                return verifyInitDataStatus(initDataStatus);
+            })
+            .then((verifiedInitDataStatus) => {
+                let initDataStatus = {};
+                
+                verifiedInitDataStatus.forEach((file) => {
+                    initDataStatus[getFileId(file.fileName)] = file;
+                });
+                
+                return initDataStatus;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 };
 
 //run_unzip_process() {
