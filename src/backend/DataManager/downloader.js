@@ -6,7 +6,8 @@ const path = require('path');
 const config = require('config');
 
 
-const emitter = require('./eventEmitter');
+const emitter = require('../eventEmitter');
+const common = require('./common');
 
 
 const dataConfig = config.get('data');
@@ -50,7 +51,7 @@ function generateInitDataStatus() {
     let initDataStatus = {};
                 
     dataConfig.files.forEach((file) => {
-        let fileId = getFileId(file.target);
+        let fileId = common.getFileId(file.target);
        
         initDataStatus[fileId] = {
             fileName: file.target,
@@ -61,24 +62,20 @@ function generateInitDataStatus() {
     return initDataStatus;
 }
 
-function getFileId(fileName) {
-    return fileName.replace('.', '-');
-}
-
-function downloadFile(url, dest) {
+function downloadFile(source, target) {
     return new Promise((resolve, reject) => {
-        let file = fs.createWriteStream(dest);
-        let request = http.get(url, (response) => {
+        let file = fs.createWriteStream(target);
+        let request = http.get(source, (response) => {
             let size = parseInt(response.headers['content-length']);
             let downloadedSize = 0;
-            let fileName = dest.split(path.sep).pop();
+            let fileName = target.split(path.sep).pop();
             let prevProgress = 0;
             let currProgress = 0;
 
             response.pipe(file);
             
             response.on('data', (chunk) => {
-                let fileId = getFileId(fileName);
+                let fileId = common.getFileId(fileName);
                 
                 downloadedSize += parseInt(chunk.length);
                 currProgress = Math.round((downloadedSize / size * 100));
@@ -93,17 +90,17 @@ function downloadFile(url, dest) {
             });
             
             file.on('finish', function() {
-                file.close(() => resolve());
+                resolve();
             });
         }).on('error', (err) => {
-            fs.unlink(dest);
+            fs.unlink(target);
             reject(err.message);
         });
     });
 }
 
 function getSource(source) {
-    return (source.toLowerCase().indexOf('.zip') > -1) ?
+    return (source.toLowerCase().indexOf('allCountries.zip'.toLowerCase()) > -1) ?
             dataConfig.sourceZip + '/' + source
         :
             dataConfig.sourceDump + '/' + source
@@ -128,7 +125,7 @@ module.exports = {
                 let initDataStatus = {};
                 
                 verifiedInitDataStatus.forEach((file) => {
-                    initDataStatus[getFileId(file.fileName)] = file;
+                    initDataStatus[common.getFileId(file.fileName)] = file;
                 });
                 
                 return initDataStatus;
@@ -137,7 +134,7 @@ module.exports = {
                 dataStatus = initDataStatus;
                 
                 Promise.all(dataConfig.files.map((file) => {
-                    let fileId = getFileId(file.target);
+                    let fileId = common.getFileId(file.target);
                     
                     if (dataStatus[fileId].progress != 100) {
                         return downloadFile(getSource(file.source), getTarget(file.target));
@@ -164,7 +161,7 @@ module.exports = {
                 let initDataStatus = {};
                 
                 verifiedInitDataStatus.forEach((file) => {
-                    initDataStatus[getFileId(file.fileName)] = file;
+                    initDataStatus[common.getFileId(file.fileName)] = file;
                 });
                 
                 return initDataStatus;

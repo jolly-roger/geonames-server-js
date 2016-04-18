@@ -28,6 +28,7 @@
   "dependencies": {
     "config": "^1.19.0",
     "express": "^4.13.4",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "unzip2": "^0.2.5"
   }
 }

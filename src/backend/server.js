@@ -6,7 +6,7 @@ const socket = require('socket.io');
 const path = require('path');
 const config = require('config');
 
-const downloader = require('./downloader');
+const dataManager = require('./DataManager');
 const emitter = require('./eventEmitter');
 
 
@@ -32,15 +32,28 @@ module.exports = function () {
     });
     
     app.get('/api/import/download-data', (req, res) => {
-        downloader.downloadData();
+        dataManager.downloadData();
         
         res.send();
     });
     
     app.get('/api/import/get-data-status', (req, res) => {
-        downloader.getDataSatatus()
+        dataManager.getDataSatatus()
         .then((dataStatus) => {
             res.send(dataStatus);
+        });
+    });
+    
+    app.get('/api/import/unzip-data', (req, res) => {
+        dataManager.unzipData();
+        
+        res.send();
+    });
+    
+    app.get('/api/import/get-unzip-status', (req, res) => {
+        dataManager.getUnzipSatatus()
+        .then((unzipStatus) => {
+            res.send(unzipStatus);
         });
     });
     
@@ -51,6 +64,10 @@ module.exports = function () {
     io.on('connection', function (socket) {
         emitter.on('download-progress', (msg) => {
             socket.emit('download-progress', msg);
+        });
+        
+        emitter.on('unzip-progress', (msg) => {
+            socket.emit('unzip-progress', msg);
         });
         
         //socket.emit('news', { hello: 'world' });

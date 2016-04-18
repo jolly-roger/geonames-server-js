@@ -2,24 +2,24 @@ import React, {Component} from 'react';
 import io from 'socket.io-client';
 
 
-export default class DownloadingProgress extends Component {
+export default class UnzippingProgress extends Component {
     constructor() {
         super();
         
-        fetch('/api/import/get-data-status')
+        fetch('/api/import/get-unzip-status')
         .then((data) => data.json())
-        .then((dataStatus) => {
-            this.setState(dataStatus);
+        .then((unzipStatus) => {
+            this.setState(unzipStatus);
         });
         
         let socket = io.connect('http://localhost:3000');
         
-        socket.on('download-progress', (msg) => {
+        socket.on('unzip-progress', (msg) => {
             this.setState(msg);
         });
     }
     
-    getDataStatusView() {
+    getUnzipStatusView() {
         if (this.state) {
             return Object.keys(this.state).map((fileId) => {
                 return (
@@ -44,7 +44,7 @@ export default class DownloadingProgress extends Component {
     render() {
         return (
             <div ref="downloadingFiles">
-                {this.getDataStatusView()}
+                {this.getUnzipStatusView()}
             </div>
         );
     }

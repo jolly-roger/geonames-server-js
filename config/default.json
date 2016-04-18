@@ -8,7 +8,7 @@
     "data": {
         "sourceDump": "http://download.geonames.org/export/dump",
         "sourceZip": "http://download.geonames.org/export/zip",
-        "dir": "../../data",
+        "dir": "../../../data",
         "files": [{
                 "source": "allCountries.zip",
                 "target": "allCountries.zip"
