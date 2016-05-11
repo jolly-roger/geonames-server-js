@@ -117,7 +117,7 @@ function unzipFile(source) {
 }
 
 function getTarget(target) {
-    return path.join(__dirname, dataConfig.dir, 'txt', target.toLowerCase().replace('.zip', '.txt'));
+    return path.join(__dirname, dataConfig.dir, 'zip', target.toLowerCase().replace('.zip', ''));
 }
 
 function getSource(source) {
@@ -171,18 +171,18 @@ module.exports = {
     },
     getUnzipSatatus: function() {
         return initUnzipStatus()
-            //.then((initUnzipStatus) => {
-            //    return verifyInitUnzipStatus(initUnzipStatus);
-            //})
-            //.then((verifiedInitUnzipStatus) => {
-            //    let initUnzipStatus = {};
-            //    
-            //    verifiedInitUnzipStatus.forEach((file) => {
-            //        initUnzipStatus[common.getFileId(file.fileName)] = file;
-            //    });
-            //    
-            //    return initUnzipStatus;
-            //})
+            .then((initUnzipStatus) => {
+                return verifyInitUnzipStatus(initUnzipStatus);
+            })
+            .then((verifiedInitUnzipStatus) => {
+                let initUnzipStatus = {};
+                
+                verifiedInitUnzipStatus.forEach((file) => {
+                    initUnzipStatus[common.getFileId(file.fileName)] = file;
+                });
+                
+                return initUnzipStatus;
+            })
             .catch((err) => {
                 console.log(err);
             });
