@@ -5,6 +5,7 @@ const http = require('http');
 const socket = require('socket.io');
 const path = require('path');
 const config = require('config');
+const bodyParser = require('body-parser');
 
 const dataManager = require('./DataManager');
 const emitter = require('./eventEmitter');
@@ -16,10 +17,18 @@ const pathToWeb = path.join(__dirname, '../../dist');
 const indexFile = path.join(pathToWeb, 'index.html');
 
 
+const jsonParser = bodyParser.json()
+
+
 module.exports = function () {
     const app = express();
     const server = http.Server(app);
     const io = socket(server);
+    
+    //app.use(body_parser.json());
+    //app.use(body_parser.urlencoded({
+    //    extended: true
+    //}));
     
     app.get('/api/login/:email/:pass', (req, res) => {
         let user = usersConfig[req.params.email];
@@ -55,6 +64,12 @@ module.exports = function () {
         .then((unzipStatus) => {
             res.send(unzipStatus);
         });
+    });
+    
+    app.post('/api/import/create-tables', jsonParser, (req, res) => {
+        dataManager.createTables(req.body);
+        
+        res.send();
     });
     
     app.use(express.static(pathToWeb), (req, res) => {

@@ -12,6 +12,23 @@ export default class Import extends Component {
         this.refs.unzipBtn.addEventListener('click', (ev) => {
             fetch('/api/import/unzip-data');
         });
+        
+        this.refs.createTables.addEventListener('click', (ev) => {
+            let credentials = {
+                host: this.refs.dbhost.value,
+                database: this.refs.dbname.value,
+                user: this.refs.dbuser.value,
+                password: this.refs.dbpassword.value
+            };
+            
+            fetch('/api/import/create-tables', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            });
+        });
     }
     
     render() {
@@ -26,6 +43,15 @@ export default class Import extends Component {
                 </div>
                 <div className="callout">
                     <h5>Create DataBase</h5>
+                    <label htmlFor="dbhost">Host</label>
+                    <input ref="dbhost" type="text" id="dbhost" />
+                    <label htmlFor="dbname">Database</label>
+                    <input ref="dbname" type="text" id="dbname" />
+                    <label htmlFor="dbuser">User</label>
+                    <input ref="dbuser" type="text" id="dbuser" />
+                    <label htmlFor="dbpassword">Password</label>
+                    <input ref="dbpassword" type="text" id="dbpassword" />
+                    <button ref="createTables" className="button">Create Tables</button>
                 </div>
                 <div className="callout">
                     <h5>Import GeoNames</h5>
