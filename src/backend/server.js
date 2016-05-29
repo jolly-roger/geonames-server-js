@@ -67,9 +67,13 @@ module.exports = function () {
     });
     
     app.post('/api/import/create-tables', jsonParser, (req, res) => {
-        dataManager.createTables(req.body);
-        
-        res.send();
+        dataManager.createTables(req.body)
+        .then(() => {
+            res.send();
+        })
+        .catch((err) => {
+            res.status(500).send({'error': err.toString()});
+        });
     });
     
     app.use(express.static(pathToWeb), (req, res) => {

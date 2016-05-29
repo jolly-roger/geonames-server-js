@@ -5,15 +5,18 @@ const mysql = require('mysql');
 
 module.exports = {
     createTables: function(credentials) {
-        let conn= mysql.createConnection(credentials);
-           
-        conn.connect(function(err) {
-            if (err) {
-              console.error('error connecting: ' + err);
-              return;
-            }
-           
-            console.log('connected as id ' + conn.threadId);
+        return new Promise((resolve, reject) => {
+            let conn= mysql.createConnection(credentials);
+               
+            conn.connect(function(err) {
+                if (err) {
+                    return reject(err);
+                }
+               
+                console.log('connected as id ' + conn.threadId);
+                
+                resolve();
+            });
         });
     }
 };
