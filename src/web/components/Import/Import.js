@@ -80,7 +80,7 @@ export default class Import extends Component {
                         <input ref="dbpassword" type="text" id="dbpassword" required />
                         <button type="submit" ref="createTables" className="button">Create Tables</button>
                     </form>
-                    <div ref="dbError"></div>
+                    <div ref="dbError" className="alert label"></div>
                 </div>
                 <div className="callout">
                     <h5>Import GeoNames</h5>
