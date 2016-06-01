@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    name: 'geonames_geoname',
     create: `CREATE TABLE geonames_geoname (
             geoname_id INT(10) UNSIGNED NOT NULL COMMENT
                 'integer id of record in geonames database',

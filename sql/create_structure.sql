@@ -28,134 +28,134 @@
 --  KEY `country_code` (`country_code`)
 --) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_hierarchy` (
-  `parent_id` INT(10) UNSIGNED NULL,
-  `child_id` INT(10) UNSIGNED NULL,
-  `type` VARCHAR(50) NOT NULL,
-  KEY `parent_id` (`parent_id`),
-  KEY `child_id` (`child_id`),
-  KEY `type` (`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_hierarchy` (
+--  `parent_id` INT(10) UNSIGNED NULL,
+--  `child_id` INT(10) UNSIGNED NULL,
+--  `type` VARCHAR(50) NOT NULL,
+--  KEY `parent_id` (`parent_id`),
+--  KEY `child_id` (`child_id`),
+--  KEY `type` (`type`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_iso_language` (
-  `iso_639_3` CHAR(3) NOT NULL,
-  `iso_639_2` VARCHAR(16) NOT NULL,
-  `iso_639_1` CHAR(2) NOT NULL,
-  `language_name` VARCHAR(256) NOT NULL,
-  KEY `iso_639_3` (`iso_639_3`),
-  KEY `iso_639_2` (`iso_639_2`),
-  KEY `iso_639_1` (`iso_639_1`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_iso_language` (
+--  `iso_639_3` CHAR(3) NOT NULL,
+--  `iso_639_2` VARCHAR(16) NOT NULL,
+--  `iso_639_1` CHAR(2) NOT NULL,
+--  `language_name` VARCHAR(256) NOT NULL,
+--  KEY `iso_639_3` (`iso_639_3`),
+--  KEY `iso_639_2` (`iso_639_2`),
+--  KEY `iso_639_1` (`iso_639_1`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_alternate_name` (
-  `alternate_name_id` INT(10) UNSIGNED NOT NULL COMMENT 'the id of this alternate name',
-  `geoname_id` INT(10) UNSIGNED NULL COMMENT 'geonameId referring to id in table geoname',
-  `iso_language` VARCHAR(7) NOT NULL COMMENT 'iso 639 language code 2- or 3-characters; 4-characters \'post\' for postal codes and \'iata\',\'icao\' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website',
-  `alternate_name` VARCHAR(200) NOT NULL COMMENT 'alternate name or name variant',
-  `is_preferred_name` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is an official/preferred name',
-  `is_short_name` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this is a short name like \'California\' for \'State of California\'',
-  `is_colloquial` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is a colloquial or slang term',
-  `is_historic` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past',
-  KEY `alternate_name_id` (`alternate_name_id`),
-  KEY `geoname_id` (`geoname_id`),
-  KEY `iso_language` (`iso_language`),
-  KEY `alternate_name` (`alternate_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_alternate_name` (
+--  `alternate_name_id` INT(10) UNSIGNED NOT NULL COMMENT 'the id of this alternate name',
+--  `geoname_id` INT(10) UNSIGNED NULL COMMENT 'geonameId referring to id in table geoname',
+--  `iso_language` VARCHAR(7) NOT NULL COMMENT 'iso 639 language code 2- or 3-characters; 4-characters \'post\' for postal codes and \'iata\',\'icao\' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website',
+--  `alternate_name` VARCHAR(200) NOT NULL COMMENT 'alternate name or name variant',
+--  `is_preferred_name` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is an official/preferred name',
+--  `is_short_name` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this is a short name like \'California\' for \'State of California\'',
+--  `is_colloquial` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is a colloquial or slang term',
+--  `is_historic` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '\'1\', if this alternate name is historic and was used in the past',
+--  KEY `alternate_name_id` (`alternate_name_id`),
+--  KEY `geoname_id` (`geoname_id`),
+--  KEY `iso_language` (`iso_language`),
+--  KEY `alternate_name` (`alternate_name`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_continent` (
-  `code` CHAR(2) NOT NULL,
-  `name` VARCHAR(20) NOT NULL,
-  `geoname_id` INT(10) UNSIGNED NOT NULL,
-  KEY `code` (`code`),
-  KEY `name` (`name`),
-  KEY `geoname_id` (`geoname_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_continent` (
+--  `code` CHAR(2) NOT NULL,
+--  `name` VARCHAR(20) NOT NULL,
+--  `geoname_id` INT(10) UNSIGNED NOT NULL,
+--  KEY `code` (`code`),
+--  KEY `name` (`name`),
+--  KEY `geoname_id` (`geoname_id`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_country` (
-  `iso2` CHAR(2) NOT NULL,
-  `iso3` CHAR(3) NOT NULL,
-  `iso_numeric` INT(10) UNSIGNED NULL,
-  `fips_code` VARCHAR(3) NOT NULL,
-  `name` VARCHAR(256) NOT NULL,
-  `capital` VARCHAR(256) NOT NULL,
-  `area_in_sq_km` double NOT NULL DEFAULT 0,
-  `population` BIGINT(12) UNSIGNED NOT NULL,
-  `continent_code` CHAR(2) NOT NULL,
-  `tld` CHAR(4) NOT NULL,
-  `currency` CHAR(3) NOT NULL,
-  `currency_name` VARCHAR(20) NOT NULL,
-  `phone` VARCHAR(20) NOT NULL,
-  `postal_code_format` VARCHAR(128) NOT NULL,
-  `postal_code_regex` TEXT NOT NULL,
-  `languages` VARCHAR(256) NOT NULL,
-  `geoname_id` INT(10) UNSIGNED NULL,
-  `neighbours` VARCHAR(128) NOT NULL,
-  `equivalent_fips_code` CHAR(10) NOT NULL,
-  KEY`iso2` (`iso2`),
-  KEY`iso3` (`iso3`),
-  KEY`iso_numeric` (`iso_numeric`),
-  KEY`fips_code` (`fips_code`),
-  KEY`geoname_id` (`geoname_id`),
-  KEY`continent_code` (`continent_code`),
-  KEY`name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_country` (
+--  `iso2` CHAR(2) NOT NULL,
+--  `iso3` CHAR(3) NOT NULL,
+--  `iso_numeric` INT(10) UNSIGNED NULL,
+--  `fips_code` VARCHAR(3) NOT NULL,
+--  `name` VARCHAR(256) NOT NULL,
+--  `capital` VARCHAR(256) NOT NULL,
+--  `area_in_sq_km` double NOT NULL DEFAULT 0,
+--  `population` BIGINT(12) UNSIGNED NOT NULL,
+--  `continent_code` CHAR(2) NOT NULL,
+--  `tld` CHAR(4) NOT NULL,
+--  `currency` CHAR(3) NOT NULL,
+--  `currency_name` VARCHAR(20) NOT NULL,
+--  `phone` VARCHAR(20) NOT NULL,
+--  `postal_code_format` VARCHAR(128) NOT NULL,
+--  `postal_code_regex` TEXT NOT NULL,
+--  `languages` VARCHAR(256) NOT NULL,
+--  `geoname_id` INT(10) UNSIGNED NULL,
+--  `neighbours` VARCHAR(128) NOT NULL,
+--  `equivalent_fips_code` CHAR(10) NOT NULL,
+--  KEY`iso2` (`iso2`),
+--  KEY`iso3` (`iso3`),
+--  KEY`iso_numeric` (`iso_numeric`),
+--  KEY`fips_code` (`fips_code`),
+--  KEY`geoname_id` (`geoname_id`),
+--  KEY`continent_code` (`continent_code`),
+--  KEY`name` (`name`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_admin_code_ascii` (
-  `code` CHAR(15) NOT NULL,
-  `name` VARCHAR(256) NOT NULL,
-  `ascii_name` VARCHAR(256) NOT NULL,
-  `geoname_id` INT(10) UNSIGNED NULL,
-  KEY `code` (`code`),
-  KEY `name` (`name`),
-  KEY `ascii_name` (`ascii_name`),
-  KEY `geoname_id` (`geoname_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_admin_code_ascii` (
+--  `code` CHAR(15) NOT NULL,
+--  `name` VARCHAR(256) NOT NULL,
+--  `ascii_name` VARCHAR(256) NOT NULL,
+--  `geoname_id` INT(10) UNSIGNED NULL,
+--  KEY `code` (`code`),
+--  KEY `name` (`name`),
+--  KEY `ascii_name` (`ascii_name`),
+--  KEY `geoname_id` (`geoname_id`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_admin_code` (
-  `code` CHAR(15) NOT NULL,
-  `name` VARCHAR(256) NOT NULL,
-  `ascii_name` VARCHAR(256) NOT NULL,
-  `geoname_id` INT(10) UNSIGNED NULL,
-  KEY `code` (`code`),
-  KEY `name` (`name`),
-  KEY `ascii_name` (`ascii_name`),
-  KEY `geoname_id` (`geoname_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_admin_code` (
+--  `code` CHAR(15) NOT NULL,
+--  `name` VARCHAR(256) NOT NULL,
+--  `ascii_name` VARCHAR(256) NOT NULL,
+--  `geoname_id` INT(10) UNSIGNED NULL,
+--  KEY `code` (`code`),
+--  KEY `name` (`name`),
+--  KEY `ascii_name` (`ascii_name`),
+--  KEY `geoname_id` (`geoname_id`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_feature` (
-  `code` CHAR(10) NOT NULL,
-  `name` VARCHAR(256) NOT NULL,
-  `description` TEXT,
-  KEY `code` (`code`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_feature` (
+--  `code` CHAR(10) NOT NULL,
+--  `name` VARCHAR(256) NOT NULL,
+--  `description` TEXT,
+--  KEY `code` (`code`),
+--  KEY `name` (`name`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_timezone` (
-  `country_code` CHAR(2) NULL,
-  `timezone` VARCHAR(48) NOT NULL,
-  `gmt_offset` DECIMAL(4,2) NULL,
-  `dst_offset` DECIMAL(4,2) NULL,
-  `raw_offset` DECIMAL(4,2) NULL,
-  KEY `country_code` (`country_code`),
-  KEY `timezone` (`timezone`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_timezone` (
+--  `country_code` CHAR(2) NULL,
+--  `timezone` VARCHAR(48) NOT NULL,
+--  `gmt_offset` DECIMAL(4,2) NULL,
+--  `dst_offset` DECIMAL(4,2) NULL,
+--  `raw_offset` DECIMAL(4,2) NULL,
+--  KEY `country_code` (`country_code`),
+--  KEY `timezone` (`timezone`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `geonames_postal_code` (
-  `country_code` CHAR(2) NOT NULL,
-  `postal_code` VARCHAR(20) NOT NULL,
-  `place_name` VARCHAR(256) NOT NULL,
-  `admin_name1` VARCHAR(256) NOT NULL,
-  `admin_code1` VARCHAR(64) NOT NULL,
-  `admin_name2` VARCHAR(256) NOT NULL,
-  `admin_code2` VARCHAR(64) NOT NULL,
-  `admin_name3` VARCHAR(256) NOT NULL,
-  `admin_code3` VARCHAR(64) NOT NULL,
-  `latitude` DECIMAL(10,7) NULL,
-  `longitude` DECIMAL(11,8) NULL,
-  `accuracy` TINYINT(2) NULL,
-  KEY `country_code` (`country_code`),
-  KEY `postal_code` (`postal_code`),
-  KEY `place_name` (`place_name`),
-  KEY `latitude` (`latitude`),
-  KEY `longitude` (`longitude`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
+--CREATE TABLE `geonames_postal_code` (
+--  `country_code` CHAR(2) NOT NULL,
+--  `postal_code` VARCHAR(20) NOT NULL,
+--  `place_name` VARCHAR(256) NOT NULL,
+--  `admin_name1` VARCHAR(256) NOT NULL,
+--  `admin_code1` VARCHAR(64) NOT NULL,
+--  `admin_name2` VARCHAR(256) NOT NULL,
+--  `admin_code2` VARCHAR(64) NOT NULL,
+--  `admin_name3` VARCHAR(256) NOT NULL,
+--  `admin_code3` VARCHAR(64) NOT NULL,
+--  `latitude` DECIMAL(10,7) NULL,
+--  `longitude` DECIMAL(11,8) NULL,
+--  `accuracy` TINYINT(2) NULL,
+--  KEY `country_code` (`country_code`),
+--  KEY `postal_code` (`postal_code`),
+--  KEY `place_name` (`place_name`),
+--  KEY `latitude` (`latitude`),
+--  KEY `longitude` (`longitude`)
+--) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

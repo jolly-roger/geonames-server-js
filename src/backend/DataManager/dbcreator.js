@@ -3,7 +3,7 @@
 const mysql = require('mysql');
 
 
-const DBCommands = require('./DBCommands');
+const DBTables = require('./DBTables');
 
 
 module.exports = {
@@ -18,25 +18,31 @@ module.exports = {
                
                 console.log('connected as id ' + conn.threadId);
                 
-                DBCommands.reduce(function (p, command) {
+                DBTables.reduce(function (p, table) {
                     return p.then(function () {
                         return new Promise((resolve, reject) => {
-                            conn.query(command.drop, function (err, results, fields) {
-                            if (err) {
-                                return reject(err);
-                            }
-                            
-                            conn.query(command.create, function (err, results, fields) {
+                            conn.query(table.drop, function (err, results, fields) {
                                 if (err) {
+                                    console.log('Table', table.name, 'drop command error:', err);
+                                    
                                     return reject(err);
                                 }
                                 
-                                console.log('execute ', results);
-                            
-                                resolve();
+                                console.log('Table', table.name, 'drop command result:', results);
+                                
+                                conn.query(table.create, function (err, results, fields) {
+                                    if (err) {
+                                        console.log('Table', table.name, 'create command error:', err);
+                                        
+                                        return reject(err);
+                                    }
+                                    
+                                    console.log('Table', table.name, 'create command result:', results);
+                                
+                                    resolve();
+                                });
                             });
                         });
-                    });
                     });
                 }, Promise.resolve());
             });
