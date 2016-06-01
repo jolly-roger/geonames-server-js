@@ -55,6 +55,36 @@ export default class Import extends Component {
                 });
             }
         });
+        
+        this.refs.loadData.addEventListener('click', (ev) => {
+            let credentials = {
+                host: this.refs.dbhost.value,
+                database: this.refs.dbname.value,
+                user: this.refs.dbuser.value,
+                password: this.refs.dbpassword.value
+            };
+            
+            fetch('/api/import/load-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            })
+            .then((res) => {
+                if (res.status == 500) {
+                    res.json()
+                    .then((resData) => {
+                        this.refs.dbError.innerHTML = resData.error;
+                    });
+                } else {
+                    this.refs.dbError.innerHTML = '';
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        });
     }
     
     render() {
@@ -81,6 +111,7 @@ export default class Import extends Component {
                         <button type="submit" ref="createTables" className="button">Create Tables</button>
                     </form>
                     <div ref="dbError" className="alert label"></div>
+                    <button type="submit" ref="loadData" className="button">Load Data</button>
                 </div>
                 <div className="callout">
                     <h5>Import GeoNames</h5>

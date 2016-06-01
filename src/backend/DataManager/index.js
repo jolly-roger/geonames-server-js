@@ -1,6 +1,7 @@
 const downloader = require('./downloader');
 const unzipper = require('./unzipper');
-const dbcreator = require('./dbcreator');
+const DBCreator = require('./DBCreator');
+const DBDataLoader = require('./DBDataLoader');
 
 
 module.exports = {
@@ -8,5 +9,6 @@ module.exports = {
     getDataSatatus: downloader.getDataSatatus,
     unzipData: unzipper.unzipData,
     getUnzipSatatus: unzipper.getUnzipSatatus,
-    createTables: dbcreator.createTables
+    createTables: DBCreator.createTables,
+    loadData: DBDataLoader.loadData
 };

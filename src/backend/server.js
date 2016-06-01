@@ -76,6 +76,16 @@ module.exports = function () {
         });
     });
     
+    app.post('/api/import/load-data', jsonParser, (req, res) => {
+        dataManager.loadData(req.body)
+        .then(() => {
+            res.send();
+        })
+        .catch((err) => {
+            res.status(500).send({'error': err.toString()});
+        });
+    });
+    
     app.use(express.static(pathToWeb), (req, res) => {
         res.sendFile(indexFile);
     });
