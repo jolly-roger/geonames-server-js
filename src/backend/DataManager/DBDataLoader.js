@@ -6,9 +6,9 @@ const dal = require('./dal');
 
 module.exports = {
     loadData: function(credentials) {
-        let myisamSortBufferSize;
-        let myisamMaxSortFileSize;
-        let keyBufferSize;
+        //let myisamSortBufferSize;
+        //let myisamMaxSortFileSize;
+        //let keyBufferSize;
         
         return dal.connection.getConnection(credentials)
         .then(function (conn) {
