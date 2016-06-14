@@ -49,9 +49,9 @@ Connection.prototype.connect = function () {
     });
 };
 
-Connection.prototype.query = function (query) {
+Connection.prototype.query = function (query, vars) {
     return new Promise((resolve, reject) => {
-        this._conn.query(query, (err, results) => {
+        this._conn.query(query, vars, (err, results) => {
             if (err) {
                 console.log(err);
                 

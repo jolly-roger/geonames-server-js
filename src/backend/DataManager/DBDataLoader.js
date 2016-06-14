@@ -6,19 +6,30 @@ const dal = require('./dal');
 
 module.exports = {
     loadData: function(credentials) {
-         return dal.connection.getConnection(credentials)
+        let myisamSortBufferSize;
+        let myisamMaxSortFileSize;
+        let keyBufferSize;
+        
+        return dal.connection.getConnection(credentials)
         .then(function (conn) {
             return conn.connect();
         })
+        //.then(function (conn) {
+        //    return conn.query(dal.commands.getDefaultConfig);
+        //})
+        //.then(function (result) {
+        //    myisamSortBufferSize = result.results[0]['@@myisam_sort_buffer_size'];
+        //    myisamMaxSortFileSize = result.results[0]['@@myisam_max_sort_file_size'];
+        //    keyBufferSize = result.results[0]['@@key_buffer_size'];
+        //
+        //    return result.connection;
+        //})
+        //.then(function (conn) {
+        //    return conn.query(dal.commands.setPerformanceConfig);
+        //})
+        //.then((result) => result.connection)
         .then(function (conn) {
             return conn.query(`
-                SET @old_myisam_sort_buffer_size = @@myisam_sort_buffer_size;
-                SET @old_myisam_max_sort_file_size = @@myisam_max_sort_file_size;
-                SET @old_key_buffer_size = @@key_buffer_size;
-                SET SESSION myisam_sort_buffer_size = 256*1024*1024; -- 256 MB
-                SET GLOBAL myisam_max_sort_file_size = 16*1024*1024*1024; -- 16 GB
-                SET GLOBAL repair_cache.key_buffer_size = 1024*1024*1024; -- 1 GB
-                
                 LOAD DATA LOCAL INFILE '/home/roger/projects/github/geonames-server-js/data/zip/allcountries/allCountries.txt'
                   INTO TABLE geonames_geoname;
                 LOAD DATA LOCAL INFILE '/home/roger/projects/github/geonames-server-js/data/zip/no-country/null.txt'
@@ -55,16 +66,10 @@ module.exports = {
                   IGNORE 1 LINES;
                 
                 LOAD DATA LOCAL INFILE '/home/roger/projects/github/geonames-server-js/data/zip/postalcodes/allCountries.txt'
-                  INTO TABLE geonames_postal_code;
-                
-                SET SESSION myisam_sort_buffer_size = @old_myisam_sort_buffer_size;
-                SET GLOBAL myisam_max_sort_file_size = @old_myisam_max_sort_file_size;
-                SET GLOBAL repair_cache.key_buffer_size = @old_key_buffer_size;
-                `
-            );
-        })
-        .then(function(result) {
-            console.log(result.results);
+                  INTO TABLE geonames_postal_code;`);
         });
+        //.then(function (conn) {
+        //    return conn.query(dal.commands.setDefaultConfig, [myisamSortBufferSize, myisamMaxSortFileSize, keyBufferSize]);
+        //});
     }
 };
