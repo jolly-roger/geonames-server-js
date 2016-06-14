@@ -81,7 +81,7 @@ module.exports = function () {
         .then(() => {
             res.send();
         })
-        .catch((err) => {
+        .catch((err) => {            
             res.status(500).send({'error': err.toString()});
         });
     });
